@@ -45,6 +45,9 @@ src/main/java/com/tuempresa/aerolinea
  └── Main.java
 ```
 
+Trabajar según: https://sergioiramosrodriguez.notion.site/TALLER-DE-GIT-TRABAJAR-CON-VERSIONES-DE-C-DIGO-1d97dc35a83180cbbd5ed4e78dd88bce
+
+
 ## 2. Requisitos funcionales
 
 ### 2.1 Gestión de Aviones

@@ -3,6 +3,48 @@
 Una aerolínea necesita digitalizar sus operaciones. Se pide desarrollar una API REST con Spring Boot que gestione la flota de aviones, los vuelos y las reservas de billetes de los pasajeros.
 La aplicación debe persistir los datos en una base de datos en memoria H2 y exponer endpoints REST bien estructurados siguiendo buenas prácticas.
 
+# Reglas del proyecto
+- Usar nombres de clases, propiedades y métodos en español.
+- Estructura de carpetas organizada por funcionalidades o features
+```bash
+src/main/java/com/tuempresa/aerolinea
+ ├── pasajero
+ │    ├── PasajeroController.java
+ │    ├── PasajeroService.java
+ │    ├── PasajeroRepository.java
+ │    ├── Pasajero.java
+ │    ├── PasajeroDTO.java
+ │    └── PasajeroMapper.java
+ │
+ ├── vuelo
+ │    ├── VueloController.java
+ │    ├── VueloService.java
+ │    ├── VueloRepository.java
+ │    ├── Vuelo.java
+ │    ├── VueloDTO.java
+ │    └── VueloMapper.java
+ │
+ ├── avion
+ │    ├── AvionController.java
+ │    ├── AvionService.java
+ │    ├── AvionRepository.java
+ │    ├── Avion.java
+ │    ├── AvionDTO.java
+ │    └── AvionMapper.java
+ │
+ ├── reserva
+ │    ├── ReservaController.java
+ │    ├── ReservaService.java
+ │    ├── ReservaRepository.java
+ │    ├── Reserva.java
+ │    ├── ReservaDTO.java
+ │    └── ReservaMapper.java
+ │
+ ├── config
+ ├── exception
+ └── Main.java
+```
+
 ## 2. Requisitos funcionales
 
 ### 2.1 Gestión de Aviones

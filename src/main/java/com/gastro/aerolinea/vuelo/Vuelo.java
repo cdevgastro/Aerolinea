@@ -1,6 +1,7 @@
 package com.gastro.aerolinea.vuelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -41,13 +42,13 @@ public class Vuelo {
 	@Column(nullable = false, length = 100)
 	private String destino;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(nullable = false)
-	private LocalDate horaSalida;
+	private LocalDateTime horaSalida;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(nullable = false)
-	private LocalDate horaLlegada;
+	private LocalDateTime horaLlegada;
 
 	@Column(nullable = false)
 	private Double precio;

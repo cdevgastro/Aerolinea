@@ -45,7 +45,41 @@ src/main/java/com/tuempresa/aerolinea
  └── Main.java
 ```
 
-Trabajar según: https://sergioiramosrodriguez.notion.site/TALLER-DE-GIT-TRABAJAR-CON-VERSIONES-DE-C-DIGO-1d97dc35a83180cbbd5ed4e78dd88bce
+- Trabajar según:
+#### Escenario B: Unirte a un proyecto que ya existe
+
+```bash
+# 1. Clona el repositorio
+git clone https://github.com/cdevgastro/Aerolinea.git
+
+# 2. Entra en la carpeta del proyecto
+cd Aerolinea
+
+# 3. Comprueba en qué rama estás
+git branch
+# La rama marcada con * es en la que estás
+
+# 4. Crea tu propia rama para trabajar (no trabajes directamente en main)
+git checkout -b feature/[funcion a implementar]
+
+# 5. Haz tus cambios en el código...
+
+# 6. Comprueba qué has modificado
+git status
+
+# 7. Revisa los cambios en detalle antes de confirmarlos
+git diff
+
+# 8. Prepara los cambios para el commit
+git add .
+
+# 9. Guarda el punto de control con un mensaje claro
+git commit -m "feat: añadir formulario de login con validación"
+
+# 10. Sube tu rama a GitHub
+git push origin feature/formulario-login
+```
+más información: https://sergioiramosrodriguez.notion.site/TALLER-DE-GIT-TRABAJAR-CON-VERSIONES-DE-C-DIGO-1d97dc35a83180cbbd5ed4e78dd88bce
 
 
 ## 2. Requisitos funcionales

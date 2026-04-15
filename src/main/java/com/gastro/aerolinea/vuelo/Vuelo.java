@@ -3,6 +3,7 @@ package com.gastro.aerolinea.vuelo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.gastro.aerolinea.avion.Avion;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;

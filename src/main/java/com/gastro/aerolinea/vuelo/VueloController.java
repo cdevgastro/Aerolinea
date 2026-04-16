@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,19 +25,29 @@ public class VueloController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Vuelo>> listarTodos() {
+    public ResponseEntity<List<VueloDTO>> listarTodos() {
         return ResponseEntity.ok(vueloService.buscarTodos());
     }
-    
+
     @GetMapping("/disponibles")
-    public ResponseEntity<List<Vuelo>> listarDisponibles() {
+    public ResponseEntity<List<VueloDTO>> listarDisponibles() {
         return ResponseEntity.ok(vueloService.buscarDisponibles());
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<List<VueloDTO>> buscarOrigenDestino(
+            @RequestParam String origen,
+            @RequestParam String destino) {
+
+        return ResponseEntity.ok(
+                vueloService.buscarPorOrigenDestino(origen, destino)
+        );
+    }
+
     @PostMapping
-    public ResponseEntity<Vuelo> crear(@RequestBody Vuelo vuelo) {
-        Vuelo nuevoVuelo = vueloService.crear(vuelo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoVuelo);
+    public ResponseEntity<VueloDTO> crear(@RequestBody VueloDTO vueloDTO) {
+        VueloDTO nuevo = vueloService.crear(vueloDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
     }
 
     @PutMapping("/{id}/estado")
@@ -44,13 +55,13 @@ public class VueloController {
             @PathVariable Long id,
             @RequestBody EstadoVuelo estado
     ) {
-    	vueloService.cambiarEstado(id, estado);
-    	return ResponseEntity.noContent().build();
+        vueloService.cambiarEstado(id, estado);
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/cancelar")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         vueloService.eliminar(id);
         return ResponseEntity.noContent().build();
-    } 
+    }
 }

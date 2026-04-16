@@ -13,5 +13,5 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long> {
 	@Query("SELECT v FROM Vuelo v WHERE v.estado = 'DISPONIBLE'")
 	List<Vuelo> buscarDisponibles();
 	
-	Optional<Vuelo> findByNumeroVuelo(String numeroVuelo);
+	Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo);
 }

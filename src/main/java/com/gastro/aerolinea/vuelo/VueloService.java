@@ -10,4 +10,8 @@ public interface VueloService {
 	Optional<Vuelo> buscarPorOrigenDestino(String origen, String destino);
 	
 	List<Vuelo> buscarDisponibles();
+	
+	Optional<Vuelo> findByNumeroVuelo(String numeroVuelo);
+	
+	void cambiarEstado(String numeroVuelo, EstadoVuelo estado);
 }

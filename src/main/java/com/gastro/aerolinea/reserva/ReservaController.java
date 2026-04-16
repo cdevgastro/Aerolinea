@@ -1,9 +1,11 @@
+package com.aerolinea.controller;   // ← Ajusta según tu paquete real
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controlador REST para gestionar las operaciones de Reservas.
@@ -17,41 +19,41 @@ public class ReservaController {
     private final ReservaService reservaService;
 
     /**
-     * Crea una nueva reserva a partir de los datos recibidos en el DTO.
+     * Crea una nueva reserva.
      */
     @PostMapping
-    public ResponseEntity<ReservaDTO> crearReserva(@RequestBody ReservaDTO reservaDTO) {
-        // Convertimos el DTO a entidad para procesar en el servicio
+    public ResponseEntity<ReservaDTO> crearReserva(@Valid @RequestBody ReservaDTO reservaDTO) {
         Reserva nuevaReserva = ReservaMapper.toEntity(reservaDTO);
-        
-        // El servicio maneja la lógica de negocio y persistencia
         Reserva reservaGuardada = reservaService.crearReserva(nuevaReserva);
-        
-        // Retornamos el DTO de la reserva creada
-        return new ResponseEntity<>(ReservaMapper.toDTO(reservaGuardada), HttpStatus.CREATED);
+
+        ReservaDTO dtoCreado = ReservaMapper.toDTO(reservaGuardada);
+        return new ResponseEntity<>(dtoCreado, HttpStatus.CREATED);
     }
 
     /**
-     * Obtiene una reserva por el DNI del usuario.
+     * Obtiene una reserva por DNI del usuario.
      */
     @GetMapping("/{dni}")
     public ResponseEntity<ReservaDTO> obtenerReservaPorDni(@PathVariable String dni) {
-        return reservaService.buscarPorDni(dni)
+        Optional<Reserva> reservaOpt = reservaService.buscarPorDni(dni);
+
+        return reservaOpt
                 .map(reserva -> ResponseEntity.ok(ReservaMapper.toDTO(reserva)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     /**
-     * Obtiene el listado completo de todas las reservas.
+     * Obtiene todas las reservas.
      */
     @GetMapping
     public ResponseEntity<List<ReservaDTO>> obtenerTodas() {
         List<Reserva> reservas = reservaService.listarTodas();
-        return ResponseEntity.ok(ReservaMapper.toDTOList(reservas));
+        List<ReservaDTO> dtos = ReservaMapper.toDTOList(reservas);
+        return ResponseEntity.ok(dtos);
     }
 
     /**
-     * Confirma una reserva existente cambiando su estado.
+     * Confirma una reserva existente.
      */
     @PatchMapping("/{dni}/confirmar")
     public ResponseEntity<ReservaDTO> confirmarReserva(@PathVariable String dni) {
@@ -62,7 +64,7 @@ public class ReservaController {
     /**
      * Cancela una reserva existente.
      */
-    @DeleteMapping("/{dni}")
+    @PatchMapping("/{dni}/cancelar")
     public ResponseEntity<Void> cancelarReserva(@PathVariable String dni) {
         reservaService.cancelarReserva(dni);
         return ResponseEntity.noContent().build();

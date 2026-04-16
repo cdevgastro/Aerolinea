@@ -6,7 +6,6 @@ import java.util.Optional;
 
 /**
  * Servicio que gestiona la lógica de negocio para las Reservas.
- * Implementa las operaciones definidas en el ReservaController.
  */
 @Service
 @RequiredArgsConstructor
@@ -15,13 +14,16 @@ public class ReservaService {
     private final ReservaRepository reservaRepository;
 
     /**
-     * Procesa la creación de una reserva.
-     * Aquí se pueden añadir validaciones como verificar si el recurso está libre.
+     * Crea una nueva reserva con validaciones básicas.
+     *
+     * @param reserva Objeto Reserva con los datos a registrar
+     * @return La reserva guardada con su ID generado
+     * @throws IllegalArgumentException si las fechas no son coherentes
      */
     public Reserva crearReserva(Reserva reserva) {
         // Validar que las fechas sean coherentes
         if (reserva.getFechaInicio().isAfter(reserva.getFechaFin())) {
-            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la de fin");
+            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin");
         }
 
         // Establecer estado inicial si no viene definido
@@ -33,37 +35,49 @@ public class ReservaService {
     }
 
     /**
-     * Busca una reserva específica utilizando el DNI como identificador.
+     * Busca una reserva por su DNI.
+     *
+     * @param dni DNI del usuario
+     * @return Optional con la reserva si existe
      */
     public Optional<Reserva> buscarPorDni(String dni) {
         return reservaRepository.findByDni(dni);
     }
 
     /**
-     * Retorna la lista de todas las reservas registradas.
+     * Retorna todas las reservas registradas.
+     *
+     * @return Lista de todas las reservas
      */
     public List<Reserva> listarTodas() {
         return reservaRepository.findAll();
     }
 
     /**
-     * Cambia el estado de una reserva a CONFIRMADA.
+     * Confirma una reserva existente.
+     *
+     * @param dni DNI de la reserva a confirmar
+     * @return La reserva actualizada con estado CONFIRMADA
+     * @throws ReservaNotFoundException si no se encuentra la reserva
      */
     public Reserva confirmarReserva(String dni) {
         Reserva reserva = reservaRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada para el DNI: " + dni));
-        
+                .orElseThrow(() -> new ReservaNotFoundException("No se encontró ninguna reserva para el DNI: " + dni));
+
         reserva.setEstado(Reserva.EstadoReserva.CONFIRMADA);
         return reservaRepository.save(reserva);
     }
 
     /**
-     * Elimina o cancela una reserva del sistema.
+     * Cancela/elimina una reserva del sistema.
+     *
+     * @param dni DNI de la reserva a cancelar
+     * @throws ReservaNotFoundException si no se encuentra la reserva
      */
     public void cancelarReserva(String dni) {
         Reserva reserva = reservaRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("No se pudo encontrar la reserva para eliminar"));
-        
+                .orElseThrow(() -> new ReservaNotFoundException("No se encontró ninguna reserva para cancelar con DNI: " + dni));
+
         reservaRepository.delete(reserva);
     }
 }

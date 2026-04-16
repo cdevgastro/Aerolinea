@@ -6,6 +6,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gastro.aerolinea.avion.Avion;
+import com.gastro.aerolinea.avion.AvionDTO;
+import com.gastro.aerolinea.avion.AvionMapper;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -35,12 +39,12 @@ public class VueloServiceImpl implements VueloService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Vuelo> findByNumeroVuelo(String numeroVuelo) {
+	public Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo) {
 	    return vueloRepository.findByNumeroVuelo(numeroVuelo);
 	}
 
 	@Override
-	public void cambiarEstado(String numeroVuelo, EstadoVuelo estado) {
+	public void cambiarEstado(Long numeroVuelo, EstadoVuelo estado) {
 	    Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
 	            .orElseThrow(() -> new RuntimeException("Vuelo no encontrado con numero: " + numeroVuelo));
 
@@ -48,10 +52,22 @@ public class VueloServiceImpl implements VueloService {
 	    vueloRepository.save(vuelo);
 	}
 	
-    public void eliminar(String numeroVuelo) {
+	@Override
+    public void eliminar(Long numeroVuelo) {
         Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
                 .orElseThrow(() -> new RuntimeException("Vuelo no encontrado con numero: " + numeroVuelo));
 
         vueloRepository.delete(vuelo);
+    }
+    
+	@Override
+    public Vuelo crear(Vuelo vuelo) {
+        vueloRepository.findByNumeroVuelo(vuelo.getNumeroVuelo())
+                .ifPresent(a -> {
+                    throw new RuntimeException("Ya existe un vuelo con numero: " + vuelo.getNumeroVuelo());
+                });
+
+        vueloRepository.save(vuelo);
+        return vuelo;
     }
 }

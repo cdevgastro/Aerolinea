@@ -11,7 +11,11 @@ public interface VueloService {
 	
 	List<Vuelo> buscarDisponibles();
 	
-	Optional<Vuelo> findByNumeroVuelo(String numeroVuelo);
+	Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo);
 	
-	void cambiarEstado(String numeroVuelo, EstadoVuelo estado);
+	void cambiarEstado(Long numeroVuelo, EstadoVuelo estado);
+
+	void eliminar(Long numeroVuelo);
+
+	Vuelo crear(Vuelo vuelo);
 }

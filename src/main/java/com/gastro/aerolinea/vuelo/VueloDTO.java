@@ -13,9 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class VueloDTO {
 
-	public enum EstadoVuelo {
-		DISPONIBLE, PROGRAMADO, EN_VUELO, ATERRIZADO, CANCELADO
-	}
 	private Long numeroVuelo;
 	private String origen;
 	private String destino;

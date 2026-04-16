@@ -1,3 +1,5 @@
+package com.gastro.aerolinea.pasajero;
+
 import jakarta.persistence.*; // O javax.persistence.* según tu versión
 import lombok.*;
 import java.time.LocalDate;

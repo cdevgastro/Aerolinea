@@ -5,17 +5,17 @@ import java.util.Optional;
 
 public interface VueloService {
 
-	List<Vuelo> buscarTodos();
-	
-	Optional<Vuelo> buscarPorOrigenDestino(String origen, String destino);
-	
-	List<Vuelo> buscarDisponibles();
-	
-	Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo);
-	
-	void cambiarEstado(Long numeroVuelo, EstadoVuelo estado);
+    List<VueloDTO> buscarTodos();
 
-	void eliminar(Long numeroVuelo);
+    List<VueloDTO> buscarPorOrigenDestino(String origen, String destino);
 
-	Vuelo crear(Vuelo vuelo);
+    List<VueloDTO> buscarDisponibles();
+
+    Optional<VueloDTO> findByNumeroVuelo(Long numeroVuelo);
+
+    void cambiarEstado(Long numeroVuelo, EstadoVuelo estado);
+
+    void eliminar(Long numeroVuelo);
+
+    VueloDTO crear(VueloDTO vueloDTO);
 }

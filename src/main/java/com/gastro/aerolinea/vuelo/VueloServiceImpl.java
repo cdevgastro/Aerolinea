@@ -17,57 +17,66 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class VueloServiceImpl implements VueloService {
 
-	private final VueloRepository vueloRepository;
+    private final VueloRepository vueloRepository;
+    private final VueloMapper vueloMapper;
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Vuelo> buscarTodos() {
-		return vueloRepository.findAll();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<VueloDTO> buscarTodos() {
+        return vueloRepository.findAll()
+                .stream()
+                .map(vueloMapper::toDTO)
+                .toList();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public Optional<Vuelo> buscarPorOrigenDestino(String origen, String destino) {
-		return vueloRepository.findByOrigenAndDestino(origen, destino);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<VueloDTO> buscarPorOrigenDestino(String origen, String destino) {
+        return vueloRepository.findByOrigenAndDestino(origen, destino)
+                .stream()
+                .map(vueloMapper::toDTO)
+                .toList();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Vuelo> buscarDisponibles() {
-		return vueloRepository.buscarDisponibles();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<VueloDTO> buscarDisponibles() {
+        return vueloRepository.buscarDisponibles()
+                .stream()
+                .map(vueloMapper::toDTO)
+                .toList();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo) {
-	    return vueloRepository.findByNumeroVuelo(numeroVuelo);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<VueloDTO> findByNumeroVuelo(Long numeroVuelo) {
+        return vueloRepository.findByNumeroVuelo(numeroVuelo)
+                .map(vueloMapper::toDTO);
+    }
 
-	@Override
-	public void cambiarEstado(Long numeroVuelo, EstadoVuelo estado) {
-	    Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
-	            .orElseThrow(() -> new RuntimeException("Vuelo no encontrado con numero: " + numeroVuelo));
+    @Override
+    public void cambiarEstado(Long numeroVuelo, EstadoVuelo estado) {
+        Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
+                .orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
 
-	    vuelo.setEstado(estado);
-	    vueloRepository.save(vuelo);
-	}
-	
-	@Override
+        vuelo.setEstado(estado);
+        vueloRepository.save(vuelo);
+    }
+
+    @Override
     public void eliminar(Long numeroVuelo) {
         Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
-                .orElseThrow(() -> new RuntimeException("Vuelo no encontrado con numero: " + numeroVuelo));
+                .orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
 
         vueloRepository.delete(vuelo);
     }
-    
-	@Override
-    public Vuelo crear(Vuelo vuelo) {
-        vueloRepository.findByNumeroVuelo(vuelo.getNumeroVuelo())
-                .ifPresent(a -> {
-                    throw new RuntimeException("Ya existe un vuelo con numero: " + vuelo.getNumeroVuelo());
-                });
+
+    @Override
+    public VueloDTO crear(VueloDTO vueloDTO) {
+        Vuelo vuelo = vueloMapper.toEntity(vueloDTO);
 
         vueloRepository.save(vuelo);
-        return vuelo;
+
+        return vueloMapper.toDTO(vuelo);
     }
 }

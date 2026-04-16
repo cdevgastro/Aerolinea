@@ -31,9 +31,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Vuelo {
 
-	public enum EstadoVuelo {
-		DISPONIBLE, PROGRAMADO, EN_VUELO, ATERRIZADO, CANCELADO
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

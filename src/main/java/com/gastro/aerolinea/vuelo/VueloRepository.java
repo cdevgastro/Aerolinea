@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.gastro.aerolinea.avion.Avion;
+
 public interface VueloRepository extends JpaRepository<Vuelo, Long> {
 
 	List<Vuelo> findByOrigenAndDestino(String origen, String destino);
@@ -14,4 +16,6 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long> {
 	List<Vuelo> buscarDisponibles();
 	
 	Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo);
+
+	List<Vuelo> findByAvion(Avion avion);
 }

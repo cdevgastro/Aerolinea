@@ -79,4 +79,19 @@ public class VueloServiceImpl implements VueloService {
 
         return vueloMapper.toDTO(vuelo);
     }
+	private String avionDisponible(Vuelo vuelo) {
+		if(vuelo.getHoraLlegada().isBefore(vuelo.getHoraSalida())){
+			return "la fecha de llegada debe ser mayor que la de salida";
+		}
+    	for(Vuelo vueloOficial:vueloRepository.findByAvion(vuelo.getAvion())){
+			if (seSolapa(vueloOficial, vuelo)){
+				return "Se solapan fechas el avion: "+ vuelo.getAvion().getMatricula() +", tiene fechas entre "+ vueloOficial.getHoraSalida() + " y " + vueloOficial.getHoraLlegada() + " ocupadas.";
+			}
+		}
+    	return "ok";
+	}	
+	private boolean seSolapa(Vuelo vueloOficial, Vuelo vuelo) {
+		return (vueloOficial.getHoraSalida().isBefore(vuelo.getHoraLlegada()) && vueloOficial.getHoraLlegada().isAfter(vuelo.getHoraSalida()));
+	}
+
 }

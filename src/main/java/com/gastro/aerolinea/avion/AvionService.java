@@ -43,7 +43,7 @@ public class AvionService {
         Avion avionExistente = avionRepository.findByMatricula(matricula)
                 .orElseThrow(() -> new RuntimeException("Avión no encontrado con matrícula: " + matricula));
 
-        avionExistente.setMatricula(avionDTO.getMatricula());
+        //avionExistente.setMatricula(avionDTO.getMatricula());
         avionExistente.setModelo(
                 avionDTO.getModelo() != null ? ModeloAvion.fromValue(avionDTO.getModelo()) : null
         );

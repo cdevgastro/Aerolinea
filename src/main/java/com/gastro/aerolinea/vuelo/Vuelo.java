@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.gastro.aerolinea.avion.Avion;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.gastro.aerolinea.avion.Avion;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

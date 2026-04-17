@@ -1,5 +1,7 @@
 package com.gastro.aerolinea.vuelo;
 
+import com.gastro.aerolinea.avion.AvionDTO;
+import com.gastro.aerolinea.avion.AvionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +23,7 @@ public class VueloMapper {
                 .horaLlegada(vuelo.getHoraLlegada())
                 .precio(vuelo.getPrecio())
                 .estado(vuelo.getEstado() != null ? EstadoVuelo.valueOf(vuelo.getEstado().name()) : null)
-                .avion(vuelo.getAvion())
+                .avion(AvionMapper.toDTO(vuelo.getAvion()))
                 .build();
     }
 
@@ -41,7 +43,7 @@ public class VueloMapper {
                 .horaLlegada(dto.getHoraLlegada())
                 .precio(dto.getPrecio())
                 .estado(dto.getEstado() != null ? EstadoVuelo.valueOf(dto.getEstado().name()) : null)
-                .avion(dto.getAvion())
+                .avion(AvionMapper.toEntity(dto.getAvion()))
                 .build();
     }
 }

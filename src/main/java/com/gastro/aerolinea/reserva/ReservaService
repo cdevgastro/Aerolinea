@@ -1,0 +1,71 @@
+package com.gastro.aerolinea.reserva;
+
+import com.gastro.aerolinea.vuelo.Vuelo;
+import com.gastro.aerolinea.vuelo.VueloRepository;
+import com.gastro.aerolinea.pasajero.Pasajero;
+import com.gastro.aerolinea.pasajero.PasajeroRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ReservaService {
+
+    private final ReservaRepository reservaRepository;
+    private final VueloRepository vueloRepository;
+    private final PasajeroRepository pasajeroRepository;
+    private final ReservaMapper reservaMapper;
+
+    public ReservaService(ReservaRepository reservaRepository, VueloRepository vueloRepository, 
+                          PasajeroRepository pasajeroRepository, ReservaMapper reservaMapper) {
+        this.reservaRepository = reservaRepository;
+        this.vueloRepository = vueloRepository;
+        this.pasajeroRepository = pasajeroRepository;
+        this.reservaMapper = reservaMapper;
+    }
+
+    @Transactional
+    public ReservaDTO crearReserva(ReservaDTO dto) {
+        Vuelo vuelo = vueloRepository.findById(dto.getNumeroVuelo())
+                .orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
+
+        // Regla: No reservar si está cancelado o lleno
+        if ("CANCELADO".equals(vuelo.getEstado())) {
+            throw new RuntimeException("No se puede reservar: el vuelo está cancelado");
+        }
+        
+        if (vuelo.getReservas().size() >= vuelo.getAvion().getCapacidadTotal()) {
+            throw new RuntimeException("No se puede reservar: el vuelo está lleno");
+        }
+
+        Pasajero pasajero = pasajeroRepository.findByDni(dto.getPasajeroDni())
+                .orElseThrow(() -> new RuntimeException("Pasajero no encontrado"));
+
+        Reserva reserva = new Reserva();
+        reserva.setVuelo(vuelo);
+        reserva.setPasajero(pasajero);
+
+        return reservaMapper.toDTO(reservaRepository.save(reserva));
+    }
+
+    public List<ReservaDTO> listarPorPasajero(String dni) {
+        return reservaRepository.findByPasajeroDni(dni).stream()
+                .map(reservaMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<ReservaDTO> listarPorVuelo(String numeroVuelo) {
+        return reservaRepository.findByVueloNumeroVuelo(numeroVuelo).stream()
+                .map(reservaMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void cancelarReserva(String localizador) {
+        Reserva reserva = reservaRepository.findByLocalizador(localizador)
+                .orElseThrow(() -> new RuntimeException("Localizador no válido"));
+        reservaRepository.delete(reserva);
+    }
+}

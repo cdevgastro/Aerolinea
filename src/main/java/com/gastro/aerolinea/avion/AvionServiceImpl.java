@@ -22,7 +22,7 @@ public class AvionServiceImpl implements AvionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<AvionDTO> listarTodos() {
+    public List<AvionDTO> obtenerTodos() {
         return avionRepository.findAll().stream()
                 .map(AvionMapper::toDTO)
                 .collect(Collectors.toList());

@@ -1,6 +1,5 @@
 package com.gastro.aerolinea.vuelo;
 
-import com.gastro.aerolinea.avion.AvionDTO;
 import com.gastro.aerolinea.avion.AvionMapper;
 import org.springframework.stereotype.Component;
 

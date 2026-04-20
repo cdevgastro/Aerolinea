@@ -3,10 +3,8 @@ package com.gastro.aerolinea.vuelo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,7 +23,6 @@ class VueloControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
     private VueloService vueloService;
 
     @Autowired
@@ -73,8 +70,8 @@ class VueloControllerTest {
         when(vueloService.buscarPorOrigenDestino("MAD", "BCN")).thenReturn(vuelos);
 
         mockMvc.perform(get("/api/vuelo/buscar")
-                        .param("origen", "MAD")
-                        .param("destino", "BCN"))
+                .param("origen", "MAD")
+                .param("destino", "BCN"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].numeroVuelo").value(101));
     }
@@ -84,8 +81,8 @@ class VueloControllerTest {
         when(vueloService.crear(any(VueloDTO.class))).thenReturn(vueloDTO);
 
         mockMvc.perform(post("/api/vuelo")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vueloDTO)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vueloDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.numeroVuelo").value(101));
     }
@@ -93,8 +90,8 @@ class VueloControllerTest {
     @Test
     void actualizarEstado_ShouldReturnNoContent() throws Exception {
         mockMvc.perform(put("/api/vuelo/101/estado")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("\"PROGRAMADO\""))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("\"PROGRAMADO\""))
                 .andExpect(status().isNoContent());
     }
 

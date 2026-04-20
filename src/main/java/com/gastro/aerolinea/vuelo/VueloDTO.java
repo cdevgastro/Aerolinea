@@ -1,7 +1,6 @@
 package com.gastro.aerolinea.vuelo;
 
 import java.time.LocalDateTime;
-import com.gastro.aerolinea.avion.Avion;
 import com.gastro.aerolinea.avion.AvionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

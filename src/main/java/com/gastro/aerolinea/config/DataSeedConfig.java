@@ -15,7 +15,7 @@ import com.gastro.aerolinea.vuelo.Vuelo;
 import com.gastro.aerolinea.vuelo.VueloRepository;
 
 @Configuration
-public class DataInitializer {
+public class DataSeedConfig {
 
     @Bean
     CommandLineRunner initData(

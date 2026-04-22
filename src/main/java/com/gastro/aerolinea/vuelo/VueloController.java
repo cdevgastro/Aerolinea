@@ -2,6 +2,7 @@ package com.gastro.aerolinea.vuelo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/vuelo")
 public class VueloController {
 
-    private final VueloService vueloService;
-
-    public VueloController(VueloService vueloService) {
-        this.vueloService = vueloService;
-    }
+    @Autowired
+    private VueloService vueloService;
 
     @GetMapping
     public ResponseEntity<List<VueloDTO>> listarTodos() {

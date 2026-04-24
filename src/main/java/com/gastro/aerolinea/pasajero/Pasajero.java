@@ -43,11 +43,4 @@ public class Pasajero {
         this.telefono = telefono;
     }
 
-    public void setNombre(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void setDni(String dni) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

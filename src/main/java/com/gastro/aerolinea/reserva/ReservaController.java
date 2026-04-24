@@ -28,7 +28,7 @@ public class ReservaController {
     }
 
     @GetMapping("/vuelo/{id}")
-    public ResponseEntity<List<ReservaDTO>> obtenerPorVuelo(@PathVariable String id) {
+    public ResponseEntity<List<ReservaDTO>> obtenerPorVuelo(@PathVariable Long id) {
         return ResponseEntity.ok(service.listarPorVuelo(id));
     }
 

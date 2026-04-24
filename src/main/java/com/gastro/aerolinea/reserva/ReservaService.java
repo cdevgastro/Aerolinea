@@ -28,7 +28,7 @@ public interface ReservaService {
      * @param id Identificador del vuelo.
      * @return Lista de reservas del vuelo.
      */
-    List<ReservaDTO> listarPorVuelo(String id);
+    List<ReservaDTO> listarPorVuelo(Long id);
 
     /**
      * Cancela una reserva por su localizador.

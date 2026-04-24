@@ -1,4 +1,40 @@
 # Aerolinea
+
+## 0. Comandos git diarios
+```bash
+# 1. Asegurarse de que estas en la rama principal
+git checkout main
+
+# 2. Actualizar los cambios en el repo remoto
+git fetch --prune
+
+# 3. Actualizar la rama local
+git pull origin main
+
+# 4. Revisar las ramas remotas (en rojo)
+git branch -a
+```
+
+### 0.A) Caso práctico: ¿Cómo ver los cambios realizados por un compañero?
+1) La rama del compañero debe estar subido al repo
+2) Ejecutar los siguientes comandos
+```bash
+# 1. Asegurarse de que estas en la rama principal
+git checkout main
+
+# 2. Actualizar los cambios en el repo remoto
+git fetch --prune
+
+# 3. Actualizar la rama local
+git pull origin main
+
+# 4. Revisar las ramas remotas (en rojo)
+git branch -a
+
+# 5. Buscar la rama del compañero y cambiarse de rama
+git checkout <rama_del_compañero>
+```
+
 ## 1. Contexto
 Una aerolínea necesita digitalizar sus operaciones. Se pide desarrollar una API REST con Spring Boot que gestione la flota de aviones, los vuelos y las reservas de billetes de los pasajeros.
 La aplicación debe persistir los datos en una base de datos en memoria H2 y exponer endpoints REST bien estructurados siguiendo buenas prácticas.

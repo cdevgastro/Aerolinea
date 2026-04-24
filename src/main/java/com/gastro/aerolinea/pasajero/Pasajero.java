@@ -1,8 +1,15 @@
 package com.gastro.aerolinea.pasajero;
 
-import jakarta.persistence.*; // O javax.persistence.* según tu versión
-import lombok.*;
-import java.time.LocalDate;
+import java.time.LocalDate; // O javax.persistence.* según tu versión
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -25,4 +32,22 @@ public class Pasajero {
     private String telefono;
     private LocalDate fechaNacimiento;
     private String nacionalidad;
+
+    public Pasajero(String apellidos, String dni, String email, LocalDate fechaNacimiento, String nacionalidad, String nombre, String telefono) {
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
+        this.nacionalidad = nacionalidad;
+        this.nombre = nombre;
+        this.telefono = telefono;
+    }
+
+    public void setNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setDni(String dni) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

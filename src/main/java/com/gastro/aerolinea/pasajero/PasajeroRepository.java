@@ -7,4 +7,7 @@ import com.gastro.aerolinea.pasajero.entity.Pasajero;
 
 @Repository
 public interface PasajeroRepository extends JpaRepository<Pasajero, String> {
+
+	void save(com.gastro.aerolinea.pasajero.Pasajero pasajero1);
+
 }

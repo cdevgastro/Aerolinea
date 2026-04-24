@@ -1,5 +1,4 @@
 package com.gastro.aerolinea.reserva;
-
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ public class ReservaMapper {
         dto.setFechaSalida(reserva.getFechaSalida());
         dto.setFechaLlegada(reserva.getFechaLlegada());
         dto.setNombrePasajero(reserva.getNombrePasajero());
-        dto.setDniPasajero(reserva.getDniPasajero());
+        dto.setNombrePasajero(reserva.getDniPasajero());
         dto.setAsiento(reserva.getAsiento());
         dto.setPrecio(reserva.getPrecio());
 
@@ -43,7 +42,7 @@ public class ReservaMapper {
         entity.setFechaSalida(dto.getFechaSalida());
         entity.setFechaLlegada(dto.getFechaLlegada());
         entity.setNombrePasajero(dto.getNombrePasajero());
-        entity.setDniPasajero(dto.getDniPasajero());
+        entity.setDniPasajero(dto.getNombrePasajero());
         entity.setAsiento(dto.getAsiento());
         entity.setPrecio(dto.getPrecio());
 

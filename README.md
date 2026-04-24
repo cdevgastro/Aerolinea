@@ -35,6 +35,33 @@ git branch -a
 git checkout <rama_del_compañero>
 ```
 
+### 0.B) Caso práctico: ¿Qué se debe hacer al final del día?
+1) Subir los cambios al repo remoto
+```bash
+# 1. Confirmar que se está en la rama de desarrollo (bugfix, feat, hotfix, docs...)
+git branch
+
+# 2. Cambiarse de rama si es necesario
+git checkout <rama_desarrollo>
+
+# 3. Hacer el commit y subir cambios
+git add .
+git commit -m "Cambios guardados"
+git push
+```
+
+2) Eliminar ramas no usadas y obsoletas en local
+```bash
+# 1. Listar las ramas
+git branch
+
+# 2. Eliminar las ramas antiguas, en las que ya no se trabaja
+git branch -D <rama_antigua_A> <rama_antigua_B>...
+
+# 3. Comprobar que solo se tienen dos ramas en local: main y la rama en la que estamos trabajando
+git branch
+```
+
 ## 1. Contexto
 Una aerolínea necesita digitalizar sus operaciones. Se pide desarrollar una API REST con Spring Boot que gestione la flota de aviones, los vuelos y las reservas de billetes de los pasajeros.
 La aplicación debe persistir los datos en una base de datos en memoria H2 y exponer endpoints REST bien estructurados siguiendo buenas prácticas.

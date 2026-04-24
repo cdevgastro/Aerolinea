@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class AvionController {
     }
 
     @PostMapping
-    public ResponseEntity<AvionDTO> crear(@RequestBody AvionDTO avionDTO) {
+    public ResponseEntity<AvionDTO> crear(@Valid @RequestBody AvionDTO avionDTO) {
         AvionDTO nuevoAvion = avionService.crear(avionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAvion);
     }

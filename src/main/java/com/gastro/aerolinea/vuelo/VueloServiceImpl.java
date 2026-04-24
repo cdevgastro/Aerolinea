@@ -69,10 +69,44 @@ public class VueloServiceImpl implements VueloService {
 
     @Override
     public VueloDTO crear(VueloDTO vueloDTO) {
+    	
+    	if(vueloDTO.getAsientosDisponibles() > vueloDTO.getAvion().getCapacidadPasajeros()) {
+    		throw new RuntimeException("Los asientos disponibles no pueden ser mayor a la capacidad del avion");
+    	}
+    	
         Vuelo vuelo = vueloMapper.toEntity(vueloDTO);
-
         vueloRepository.save(vuelo);
 
         return vueloMapper.toDTO(vuelo);
+    }
+    
+    @Override
+    @Transactional
+    public void reservarAsiento(Long numeroVuelo) {
+    	Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
+    			.orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
+    	
+    	int asientosDisponibles = vuelo.getAsientosDisponibles();
+    	if(asientosDisponibles > 0) {
+    		asientosDisponibles--;
+    	} else {
+    		 throw new RuntimeException("Todos los asientos estan ocupados");
+    	}
+
+    	vuelo.setAsientosDisponibles(asientosDisponibles);
+        vueloRepository.save(vuelo);
+    }
+    
+    @Override
+    @Transactional
+    public void liberarAsiento(Long numeroVuelo) {
+    	Vuelo vuelo = vueloRepository.findByNumeroVuelo(numeroVuelo)
+    			.orElseThrow(() -> new RuntimeException("Vuelo no encontrado"));
+    	
+    	int asientosDisponibles = vuelo.getAsientosDisponibles();
+    	asientosDisponibles++;
+
+    	vuelo.setAsientosDisponibles(asientosDisponibles);
+        vueloRepository.save(vuelo);
     }
 }

@@ -14,4 +14,6 @@ public interface VueloRepository extends JpaRepository<Vuelo, Long> {
 	List<Vuelo> buscarDisponibles();
 	
 	Optional<Vuelo> findByNumeroVuelo(Long numeroVuelo);
+	
+	
 }

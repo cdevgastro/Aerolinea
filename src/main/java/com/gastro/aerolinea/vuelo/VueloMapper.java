@@ -23,6 +23,7 @@ public class VueloMapper {
                 .precio(vuelo.getPrecio())
                 .estado(vuelo.getEstado() != null ? EstadoVuelo.valueOf(vuelo.getEstado().name()) : null)
                 .avion(AvionMapper.toDTO(vuelo.getAvion()))
+                .asientosDisponibles(vuelo.getAsientosDisponibles())
                 .build();
     }
 
@@ -43,6 +44,7 @@ public class VueloMapper {
                 .precio(dto.getPrecio())
                 .estado(dto.getEstado() != null ? EstadoVuelo.valueOf(dto.getEstado().name()) : null)
                 .avion(AvionMapper.toEntity(dto.getAvion()))
+                .asientosDisponibles(dto.getAsientosDisponibles())
                 .build();
     }
 }

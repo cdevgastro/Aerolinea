@@ -18,4 +18,8 @@ public interface VueloService {
     void eliminar(Long numeroVuelo);
 
     VueloDTO crear(VueloDTO vueloDTO);
+
+	void reservarAsiento(Long numeroVuelo);
+
+	void liberarAsiento(Long numeroVuelo);
 }

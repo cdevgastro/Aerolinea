@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -63,4 +64,8 @@ public class Vuelo {
 	@ManyToOne
 	@JoinColumn(name = "matricula", nullable = false)
 	private Avion avion;
+	
+	@PositiveOrZero(message = "Los asientos disponibles no puede ser negativo")
+	@Column(nullable = false)
+	private int asientosDisponibles;
 }

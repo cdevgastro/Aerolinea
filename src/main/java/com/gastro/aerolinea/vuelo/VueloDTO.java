@@ -35,4 +35,6 @@ public class VueloDTO {
 	private EstadoVuelo estado;
 	@NotNull(message = "El avión no puede estar vacío")
 	private AvionDTO avion;
+	@PositiveOrZero(message = "Los asientos disponibles no puede ser negativo")
+	private int asientosDisponibles;
 }

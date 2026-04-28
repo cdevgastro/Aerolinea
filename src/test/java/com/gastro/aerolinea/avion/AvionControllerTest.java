@@ -22,7 +22,7 @@ class AvionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-
+    @MockitoBean
     private AvionService avionService;
 
     @Autowired
